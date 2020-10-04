@@ -1,8 +1,9 @@
 module.exports = {
   port: "3306",
-  USER: "root",
-  PASSWORD: "root",
-  DB: "app",
+  USER: "university_ozi",
+  PASSWORD: "Qwerty123",
+  HOST:'db4free.net',
+  DB: "university_app",
   dialect: "mysql",
   define: {
     charset: 'utf8',

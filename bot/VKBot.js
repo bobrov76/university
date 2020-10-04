@@ -2,6 +2,7 @@ const VkBot = require("node-vk-bot-api");
 const botConfig = require("../config/bot");
 const Markup = require("node-vk-bot-api/lib/markup");
 const timetableClass = require("../function/timetable");
+const helper = require("../function/helper");
 
 const bot = new VkBot(botConfig.token);
 
@@ -34,21 +35,63 @@ bot.command("Начать", (ctx) => {
 });
 
 bot.command("Пн", (ctx) => {
-  console.log('timetableClass.getDay(0, "Пн")');
-  let k = timetableClass.getDay(1, "Пн");
-  let date = new Date();
-  let dayWeek = [7, 1, 2, 3, 4, 5, 6][date.getDay()];
-  console.log( dayWeek);
-  k.then(kk=> {
-    ctx.reply(kk);
-  });
-  
-  
+  getBotData("Пн", ctx);
 });
 
+bot.command("Вт", (ctx) => {
+  getBotData("Вт", ctx);
+});
+
+bot.command("Ср", (ctx) => {
+  getBotData("Ср", ctx);
+});
+
+bot.command("Чт", (ctx) => {
+  getBotData("Чт", ctx);
+});
+
+bot.command("Пт", (ctx) => {
+  getBotData("Пт", ctx);
+});
 
 bot.command("На сегодня", (ctx) => {
-  ctx.reply(timetableClass.getDay(0, "Пн"));
+  getBotData(null, ctx);
 });
+
+bot.command("На неделю", (ctx) => {
+  getBotWeek(ctx);
+});
+
+bot.command("Все", (ctx) => {
+  getBotAll(ctx);
+});
+
+getBotWeek = (ctx) => {
+  let data = timetableClass.getWeek(!helper.isEvens(), 1); // 1 - День недели, 2 - isBot bool
+  data.then((item) => {
+    ctx.reply(item);
+  });
+};
+
+getBotAll = (ctx) => {
+  let data = timetableClass.getAll(1); // isBot bool
+  data.then((item) => {
+    ctx.reply(item);
+  });
+};
+
+getBotData = (day, ctx) => {
+  if (!day) day = helper.getToday();
+
+  // нужна проверка на пустоту даты
+  if (day) {
+    let data = timetableClass.getDay(!helper.isEvens(), day, 1); // параметры 1 - четная ли неделя bool, 2 - День недели, 3 - isBot bool
+    data.then((item) => {
+      ctx.reply(item);
+    });
+  } else {
+    ctx.reply("Сегодня выходной &#128578;");
+  }
+};
 
 bot.startPolling();

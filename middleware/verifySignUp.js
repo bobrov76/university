@@ -1,6 +1,7 @@
 const db = require("../models");
 const User = db.user;
 
+
 checkDuplicateUsername = (req, res, next) => {
   // Username
   User.findOne({
@@ -14,6 +15,7 @@ checkDuplicateUsername = (req, res, next) => {
       });
       return;
     }
+    next();
   });
 };
 

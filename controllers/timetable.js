@@ -3,7 +3,8 @@ const timetableClass = require("../function/timetable");
 const Timetable = db.timetable;
 
 exports.create = (req, res) => {
-  // Validate request
+  console.log(req.body);
+  //Validate request
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!",
@@ -22,7 +23,8 @@ exports.create = (req, res) => {
 
   Timetable.create(timetable)
     .then((data) => {
-      res.send(data);
+      if (data) res.send({ message: "Данные успешно добавлены" });
+      else res.send({ message: "Возникла ошибка попробуйте позже" });
     })
     .catch((err) => {
       res.status(500).send({
@@ -33,7 +35,10 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  Timetable.findAll({ attributes: { exclude: ["createdAt", "updatedAt"] }, limit: 4})
+  Timetable.findAll({
+    attributes: { exclude: ["createdAt", "updatedAt"] },
+    limit: 4,
+  })
     .then((data) => {
       res.send(data);
     })
@@ -67,7 +72,7 @@ exports.update = (req, res) => {
   })
     .then(() => {
       res.send({
-        message: "Timetable was updated successfully.",
+        message: "Данные успешно обновлены",
       });
     })
     .catch((err) => {
@@ -83,16 +88,10 @@ exports.delete = (req, res) => {
   Timetable.destroy({
     where: { id: id },
   })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "Timetable was deleted successfully!",
-        });
-      } else {
-        res.send({
-          message: `Cannot delete Timetable with id=${id}. Maybe Timetable was not found!`,
-        });
-      }
+    .then(() => {
+      res.send({
+        message: "Данные успешно удалены",
+      });
     })
     .catch((err) => {
       res.status(500).send({
