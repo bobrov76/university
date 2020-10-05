@@ -7,10 +7,10 @@ getDay = async (even, weekDay,isBot) => {
     where: { isEven: even, weekDay: weekDay },
     attributes: { exclude: ["createdAt", "updatedAt"] },
   });
-  
+
   // Проверяем бот или нет если бот то обрабатываем через конструктор
   if(isBot){
-    if(!data) return ["Данные отсутствуют"];
+    if(data.length===0) return "Данные отсутствуют &#128556;";
     else return helper.messageConstructor(data);
   }
   else return data;
@@ -24,7 +24,7 @@ getWeek = async (even, isBot) => {
   
   // Проверяем бот или нет если бот то обрабатываем через конструктор
   if(isBot){
-    if(!data) return ["Данные отсутствуют"];
+    if(data.length===0) return "Данные отсутствуют &#128556;";
     else return helper.messageConstructor(data);
   }
   else return data;
@@ -35,7 +35,7 @@ getAll = async (isBot) => {
   
   // Проверяем бот или нет если бот то обрабатываем через конструктор
   if(isBot){
-    if(!data) return ["Данные отсутствуют"];
+    if(data.length===0) return "Данные отсутствуют &#128556;";
     else return helper.messageConstructor(data);
   }
   else return data;

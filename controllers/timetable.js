@@ -36,8 +36,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
   Timetable.findAll({
-    attributes: { exclude: ["createdAt", "updatedAt"] },
-    limit: 4,
+    attributes: { exclude: ["createdAt", "updatedAt"] }
   })
     .then((data) => {
       res.send(data);

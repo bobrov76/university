@@ -19,7 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = require("./models");
 
 
-db.sequelize.sync({ force: true }).then(() => { console.log("БД обновлена");});
+//db.sequelize.sync({ force: true }).then(() => { console.log("БД обновлена");});
+//db.sequelize.sync({ force: true }).then(() => { console.log("БД обновлена");});
 db.sequelize.sync().then(() => { console.log("БД запущена");});
 
 // routes

@@ -86,6 +86,7 @@ getBotData = (day, ctx) => {
   // нужна проверка на пустоту даты
   if (day) {
     let data = timetableClass.getDay(!helper.isEvens(), day, 1); // параметры 1 - четная ли неделя bool, 2 - День недели, 3 - isBot bool
+
     data.then((item) => {
       ctx.reply(item);
     });
