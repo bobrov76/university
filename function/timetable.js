@@ -9,7 +9,10 @@ getDay = async (even, weekDay,isBot) => {
   });
   
   // Проверяем бот или нет если бот то обрабатываем через конструктор
-  if(isBot) return helper.messageConstructor(data); 
+  if(isBot){
+    if(!data) return "Данные отсутствуют";
+    else return helper.messageConstructor(data);
+  }
   else return data;
 };
 
@@ -20,7 +23,10 @@ getWeek = async (even, isBot) => {
   });
   
   // Проверяем бот или нет если бот то обрабатываем через конструктор
-  if(isBot) return helper.messageConstructor(data); 
+  if(isBot){
+    if(!data) return "Данные отсутствуют";
+    else return helper.messageConstructor(data);
+  }
   else return data;
 };
 
@@ -28,7 +34,10 @@ getAll = async (isBot) => {
   const data = await Timetable.findAll({ attributes: { exclude: ["createdAt", "updatedAt"] }});
   
   // Проверяем бот или нет если бот то обрабатываем через конструктор
-  if(isBot) return helper.messageConstructor(data); 
+  if(isBot){
+    if(!data) return "Данные отсутствуют";
+    else return helper.messageConstructor(data);
+  }
   else return data;
 };
 
