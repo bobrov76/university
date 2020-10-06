@@ -62,7 +62,7 @@ messageConstructor = (datas) => {
       message += `${data.weekDay} \n`;
     }
     message += "&#9989;Пара " + i + "\n";
-    message += "Предмет : " + data.subject + "\n";
+    message += "Предмет : " + data.subject + " ( " + data.cabinet+ " каб.) \n";
     message += "Время: " + data.timeStart + " : " + data.timeEnd + "\n";
     message += "Преподаватель: " + data.teacher + "\n\n";
 

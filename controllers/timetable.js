@@ -1,14 +1,15 @@
 const db = require("../models");
 const timetableClass = require("../function/timetable");
+const validator = require("../middleware/validationReq");
 const Timetable = db.timetable;
 
 exports.create = (req, res) => {
-  console.log(req.body);
+
+
   //Validate request
-  if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
+  const valid = validator.validationTimetable(req.body);
+  if(valid.error){
+    res.status(400).send({ message: valid.error });
     return;
   }
 
@@ -19,6 +20,7 @@ exports.create = (req, res) => {
     timeEnd: req.body.timeEnd,
     subject: req.body.subject,
     teacher: req.body.teacher,
+    cabinet: req.body.cabinet,
   };
 
   Timetable.create(timetable)
@@ -29,24 +31,15 @@ exports.create = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial.",
+          err.message || "Возникла ошибка попробуйте позже",
       });
     });
 };
 
 exports.findAll = (req, res) => {
-  Timetable.findAll({
-    attributes: { exclude: ["createdAt", "updatedAt"] }
-  })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials.",
-      });
-    });
+  let data = timetableClass.getAll(0);
+  data.then(item=>res.send(item));
+  ;
 };
 
 exports.findOne = (req, res) => {
@@ -58,55 +51,40 @@ exports.findOne = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving Timetable with id=" + id,
+        message: err.message || "Error retrieving Timetable with id=" + id,
       });
     });
 };
 
 exports.update = (req, res) => {
+
   const id = req.params.id;
 
-  Timetable.update(req.body, {
-    where: { id: id },
-  })
+  //Validate request
+  const valid = validator.validationTimetable(req.body);
+  if(valid.error.length > 0 ){
+    res.status(400).send({ message: valid.error });
+    return;
+  }
+
+  Timetable.update(req.body, { where: { id: id }})
     .then(() => {
-      res.send({
-        message: "Данные успешно обновлены",
-      });
+      res.send({ message: "Данные успешно обновлены" });
     })
     .catch((err) => {
-      res.status(500).send({
-        message: "Error updating Tutorial with id=" + id,
-      });
+      res.status(500).send({ message: err.message || "Ошибка обновления данных" });
     });
 };
 
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Timetable.destroy({
-    where: { id: id },
-  })
+  Timetable.destroy({ where: { id: id }})
     .then(() => {
-      res.send({
-        message: "Данные успешно удалены",
-      });
+      res.send({ message: "Данные успешно удалены" });
     })
     .catch((err) => {
-      res.status(500).send({
-        message: "Could not delete Timetable with id=" + id,
-      });
+      res.status(500).send({  message: err.message || "Ошибка удаления данных"});
     });
 };
 
-exports.findDay = (req, res) => {
-  return timetableClass.getDay(req.query.even, req.query.weekDay);
-};
-
-exports.findWeek = (req, res) => {
-  return timetableClass.getWeek(req.query.even);
-};
-
-// exports.findAll = (req, res) => {
-//   return timetableClass.getAll();
-// };
