@@ -24,6 +24,7 @@ bot.command("Начать", (ctx) => {
         Markup.button("Вт", "primary"),
         Markup.button("Ср", "primary"),
         Markup.button("Чт", "primary"),
+        Markup.button("Пт", "primary"),
       ],
       [
         Markup.button("На неделю", "positive"),
