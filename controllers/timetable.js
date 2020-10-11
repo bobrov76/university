@@ -5,13 +5,14 @@ const Timetable = db.timetable;
 
 exports.create = (req, res) => {
 
-
-  //Validate request
-  const valid = validator.validationTimetable(req.body);
-  if(valid.error){
-    res.status(400).send({ message: valid.error });
-    return;
-  }
+  // console.log(req.body)
+  //
+  // //Validate request
+  // const valid = validator.validationTimetable(req.body);
+  // if(valid.error){
+  //   res.status(400).send({ message: valid.error });
+  //   return;
+  // }
 
   const timetable = {
     isEven: req.body.isEven,
@@ -29,6 +30,7 @@ exports.create = (req, res) => {
       else res.send({ message: "Возникла ошибка попробуйте позже" });
     })
     .catch((err) => {
+      console.log('err' + err)
       res.status(500).send({
         message:
           err.message || "Возникла ошибка попробуйте позже",
@@ -37,6 +39,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
+  console.log(res.headers)
   let data = timetableClass.getAll(0);
   data.then(item=>res.send(item));
   ;
@@ -61,11 +64,11 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   //Validate request
-  const valid = validator.validationTimetable(req.body);
-  if(valid.error.length > 0 ){
-    res.status(400).send({ message: valid.error });
-    return;
-  }
+  // const valid = validator.validationTimetable(req.body);
+  // if(valid.error.length > 0 ){
+  //   res.status(400).send({ message: valid.error });
+  //   return;
+  // }
 
   Timetable.update(req.body, { where: { id: id }})
     .then(() => {
@@ -78,7 +81,6 @@ exports.update = (req, res) => {
 
 exports.delete = (req, res) => {
   const id = req.params.id;
-
   Timetable.destroy({ where: { id: id }})
     .then(() => {
       res.send({ message: "Данные успешно удалены" });

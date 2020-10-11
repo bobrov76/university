@@ -43,6 +43,9 @@ messageConstructor = (datas) => {
   let isEven = true;
 
   datas.forEach((data) => {
+
+    console.log(data)
+
     // четная ли неделя
 
     if (isEven != data.isEven) {

@@ -4,22 +4,22 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN,
     },
     weekDay: {
-      type: Sequelize.STRING(2),
+      type: Sequelize.STRING,
     },
     timeStart: {
-      type: Sequelize.STRING(5),
+      type: Sequelize.STRING,
     },
     timeEnd: {
-      type: Sequelize.STRING(5),
+      type: Sequelize.STRING,
     },
     subject: {
-      type: Sequelize.STRING(50),
+      type: Sequelize.STRING,
     },
     teacher: {
-      type: Sequelize.STRING(50),
+      type: Sequelize.STRING,
     },
     cabinet:{
-      type: Sequelize.INTEGER(4),
+      type: Sequelize.STRING,
     }
   });
 

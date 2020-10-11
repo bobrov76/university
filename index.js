@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require('path');
 
 const app = express();
 
@@ -26,6 +27,11 @@ db.sequelize.sync().then(() => { console.log("БД запущена");});
 // routes
 require("./routes/auth")(app);
 require("./routes/timetable")(app);
+
+app.use(express.static('public'));
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname,"public/index.html"))
+});
 
 require("./bot/VKBot");
 
