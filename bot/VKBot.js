@@ -74,7 +74,7 @@ getBotWeek = (ctx) => {
 };
 
 getBotAll = (ctx) => {
-  let data = timetableClass.getAll(1); // isBot bool
+  let data = timetableClass.getAllBot(); // isBot bool
   data.then((item) => {
     ctx.reply(item);
   });

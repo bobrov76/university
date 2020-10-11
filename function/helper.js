@@ -1,11 +1,8 @@
 isEvens = () => {
-  var year = new Date().getFullYear();
-  var month = new Date().getMonth();
-  var today = new Date(year, month, 0).getTime();
-  var now = new Date().getTime();
-  var week = Math.round((now - today) / (1000 * 60 * 60 * 24 * 7));
-
-  return week % 2 ? 1 : 0;
+  let now = new Date();
+  let onejan = new Date(now.getFullYear(), 0, 1);
+  let week = Math.ceil( (((now - onejan) / 86400000) + onejan.getDay() + 1) / 7 );
+  return week-1 % 2 ? 1 : 0;
 };
 
 getToday = () => {
@@ -36,47 +33,64 @@ getToday = () => {
 };
 
 // формирует шаблон сообщения
-messageConstructor = (datas) => {
-  let i = 0;
-  let id = 0;
+messageConstructorDay = (datas) => {
+
   let message = "";
-  let isEven = true;
 
-  datas.forEach((data) => {
+  datas.forEach((data, i) => {
 
-    console.log(data)
-
-    // четная ли неделя
-
-    if (isEven != data.isEven) {
-      if (data.isEven) message += "Четная неделя \n";
-      else message += "Не четная неделя \n";
-    }
-
-    isEven = data.isEven;
-
-    // День недели
-    if (id !== data.id) {
-      id = data.id;
-      i += 1;
-    }
-
-    if (i <= 1) {
-      message += `${data.weekDay} \n`;
-    }
-    message += "&#9989;Пара " + i + "\n";
+    if(i==0) message += `${data.weekDay} \n`;
+    message += "&#9989;Пара " + Number(i+1) + "\n";
     message += "Предмет : " + data.subject + " ( " + data.cabinet+ " каб.) \n";
     message += "Время: " + data.timeStart + " : " + data.timeEnd + "\n";
     message += "Преподаватель: " + data.teacher + "\n\n";
-
-    if (i == 2) i = 0;
   });
+  return message;
+};
 
+messageConstructorWeek = (datas) => {
+
+  let message = "";
+  let number = 0;
+
+  datas.forEach((data, i) => {
+    number+=1;
+    if(i%2==0) message += `${data.weekDay} \n`;
+    message += "&#9989;Пара " + Number(number) + "\n";
+    message += "Предмет : " + data.subject + " ( " + data.cabinet+ " каб.) \n";
+    message += "Время: " + data.timeStart + " : " + data.timeEnd + "\n";
+    message += "Преподаватель: " + data.teacher + "\n\n";
+    if(number==2) number=0;
+  });
+  return message;
+};
+
+messageConstructorAll = (datas) => {
+
+  let message = "";
+  let number = 0;
+
+  datas.forEach((data, i, arr) => {
+
+    if(i==0) message += `\n 1&#8419; Четная неделя \n\n\n`;
+    if(i==8) message += `\n 2&#8419; Нечетная неделя \n\n\n`;
+
+    number+=1;
+    if(i%2==0) message += `${data.weekDay} \n`;
+
+    message += "&#9989;Пара " + Number(number) + "\n";
+    message += "Предмет : " + data.subject + " ( " + data.cabinet+ " каб.) \n";
+    message += "Время: " + data.timeStart + " : " + data.timeEnd + "\n";
+    message += "Преподаватель: " + data.teacher + "\n\n";
+    if(number==2) number=0;
+  });
   return message;
 };
 
 module.exports = {
   getToday: getToday,
-  messageConstructor: messageConstructor,
+  messageConstructorDay: messageConstructorDay,
+  messageConstructorAll:messageConstructorAll,
+  messageConstructorWeek:messageConstructorWeek,
   isEvens: isEvens,
 };

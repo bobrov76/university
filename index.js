@@ -19,9 +19,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = require("./models");
 
+const initData = require("./config/startData");
 
 //db.sequelize.sync({ force: true }).then(() => { console.log("БД обновлена");});
-//db.sequelize.sync({ force: true }).then(() => { console.log("БД обновлена");});
+db.sequelize.sync({ force: true }).then(() => {
+  initData.initial();
+  console.log("БД обновлена");
+});
 db.sequelize.sync().then(() => { console.log("БД запущена");});
 
 // routes
