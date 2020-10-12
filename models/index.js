@@ -26,6 +26,7 @@ db.sequelize = sequelize;
 
 db.user = require("../models/user")(sequelize, Sequelize);
 db.timetable = require("../models/timetable")(sequelize, Sequelize);
+db.userNotifications = require("../models/userNotifications")(sequelize, Sequelize);
 
 
 module.exports = db;

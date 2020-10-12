@@ -2,24 +2,19 @@ const db = require("../models");
 const Timetable = db.timetable;
 const helper = require("../function/helper");
 
-getDay = async (even, weekDay,isBot) => {
+getDay = async (even, weekDay) => {
 
   const data = await Timetable.findAll({
     where: { isEven: even, weekDay: weekDay },
     attributes: { exclude: ["createdAt", "updatedAt"] },
   });
-  console.log(data)
-  // Проверяем бот или нет если бот то обрабатываем через конструктор
-  if(isBot){
     if(even && weekDay=="Вт") return "Сегодня выходной &#128524;";
     else if(!even && weekDay=="Пн") return "Сегодня выходной &#128524;";
     else if(data.length===0) return "Данные отсутствуют &#128556;";
     else return helper.messageConstructorDay(data);
-  }
-  else return data;
 };
 
-getWeek = async (even, isBot) => {
+getWeek = async (even) => {
 
   let array=[];
   const pn = await Timetable.findAll({ where: { isEven: even, weekDay: 'Пн' }, attributes: { exclude: ["createdAt", "updatedAt"] }});
@@ -33,15 +28,12 @@ getWeek = async (even, isBot) => {
   const pt = await Timetable.findAll({ where: { isEven: even, weekDay: 'Пт' }, attributes: { exclude: ["createdAt", "updatedAt"] }});
   pt.forEach((data) => { array.push(data) });
 
-  // Проверяем бот или нет если бот то обрабатываем через конструктор
-  if(isBot){
     if(array.length===0) return "Данные отсутствуют &#128556;";
     else return helper.messageConstructorWeek(array);
-  }
-  else return array;
+
 };
 
-getAll = async (isBot) => {
+getAll = async () => {
   const data = await Timetable.findAll({
       order: [
           ['isEven', 'ASC'],
@@ -50,11 +42,10 @@ getAll = async (isBot) => {
     attributes: { exclude: ["createdAt", "updatedAt"] }});
   
   // Проверяем бот или нет если бот то обрабатываем через конструктор
-  if(isBot){
+
     if(data.length===0) return "Данные отсутствуют &#128556;";
     else return helper.messageConstructorAll(data);
-  }
-  else return data;
+
 };
 
 getAllBot = async () => {

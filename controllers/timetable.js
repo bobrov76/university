@@ -1,5 +1,4 @@
 const db = require("../models");
-const timetableClass = require("../function/timetable");
 const validator = require("../middleware/validationReq");
 const Timetable = db.timetable;
 
@@ -39,10 +38,16 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  console.log(res.headers)
-  let data = timetableClass.getAll(0);
-  data.then(item=>res.send(item));
-  ;
+  Timetable.findAll({ order: [ ['isEven', 'ASC'], ['weekDay', 'ASC'],],
+    attributes: { exclude: ["createdAt", "updatedAt"] }})
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Возникла ошибка вывод невозможен",
+        });
+      });
 };
 
 exports.findOne = (req, res) => {

@@ -70,7 +70,7 @@ messageConstructorAll = (datas) => {
   let message = "";
   let number = 0;
 
-  datas.forEach((data, i, arr) => {
+  datas.forEach((data, i) => {
 
     if(i==0) message += `\n 1&#8419; Четная неделя \n\n\n`;
     if(i==8) message += `\n 2&#8419; Нечетная неделя \n\n\n`;

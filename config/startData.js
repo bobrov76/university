@@ -42,9 +42,9 @@ const data = [
     weekDay:"Ср",
     timeStart:"17:10",
     timeEnd:"18:40",
-    subject:"Информатика",
-    teacher:"Карнетова Ирина Викторовна",
-    cabinet:"406",
+    subject:"Математика",
+    teacher:"Плюснина Елена Сергеевна",
+    cabinet:"412",
   },
   {
     isEven:0,
