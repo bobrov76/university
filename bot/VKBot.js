@@ -22,7 +22,7 @@ cron.schedule('* * * * *', async () => { //1 раз в минуту
   var oldDay = oldDate.getDay();
   var oldHours = oldDate.getHours();
   var oldMinutes = oldDate.getMinutes();
-  if(newDay+newHour+newMinute == newDay+oldHours+oldMinutes) {
+  if(newDay.toString()+newHour.toString()+newMinute.toString() == newDay.toString()+oldHours.toString()+oldMinutes.toString()) {
     let getNotification = userNotifications.getNotification();
     getNotification.then(item=>{
       getDataShedull(item);
