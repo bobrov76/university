@@ -38,7 +38,7 @@ cron.schedule('* * * * *', async () => { //1 раз в минуту
 bot.on((ctx) => {
   console.log(ctx.message);
 
-  if (ctx.message.body == "Начать") {
+  if (ctx.message.text == "Начать" && ctx.message.text == "начать") {
     ctx.reply(
         "Выбери промежуток для расписания",
         null,
@@ -107,7 +107,7 @@ function botComand(ctx) {
       getComand(ctx);
       break;
     default:
-      ctx.reply('Отвали &#128545;');
+      ctx.reply('Извините я не могу ответить на этот вопрос &#128545;');
   }
 }
 
