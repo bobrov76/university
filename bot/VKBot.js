@@ -13,21 +13,20 @@ const bot = new VkBot(botConfig.token);
 // отправка по времени
 cron.schedule('* * * * *', async () => { //1 раз в минуту
   const newDate = new Date();
-  const newYear = newDate.getFullYear();
-  const newMonth = newDate.getMonth();
-  const newDay = newDate.getDay();
-  const newHour = newDate.getHours();
-  const newMinute = newDate.getMinutes();
-  let oldDate = new Date(newYear, newMonth, newDay, 15, 0, 0, 0);
-  var oldDay = oldDate.getDay();
-  var oldHours = oldDate.getHours();
-  var oldMinutes = oldDate.getMinutes();
-  if(newDay.toString()+newHour.toString()+newMinute.toString() == newDay.toString()+oldHours.toString()+oldMinutes.toString()) {
-    let getNotification = userNotifications.getNotification();
-    getNotification.then(item=>{
-      getDataShedull(item);
-    })
+  const oldDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 14, 0, 0, 0);
+  let ifOld = newDate.getFullYear() + '-' + newDate.getMonth() + '-' + newDate.getDate() + '-' + oldDate.getHours() + '-' + oldDate.getMinutes();
+  let ifNew = newDate.getFullYear() + '-' + newDate.getMonth() + '-' + newDate.getDate() + '-' + newDate.getHours() + '-' + newDate.getMinutes();
+
+  if(Number(newDate.getDay()) !== 6 || Number(newDate.getDay()) !== 7){
+    if(ifNew === ifOld) {
+      let getNotification = userNotifications.getNotification();
+      getNotification.then(item=>{
+        getDataShedull(item);
+      })
+    }
   }
+
+
 
 });
 

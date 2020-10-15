@@ -28,8 +28,9 @@ getWeek = async (even) => {
   const pt = await Timetable.findAll({ where: { isEven: even, weekDay: 'Пт' }, attributes: { exclude: ["createdAt", "updatedAt"] }});
   pt.forEach((data) => { array.push(data) });
 
+    console.log(array)
     if(array.length===0) return "Данные отсутствуют &#128556;";
-    else return helper.messageConstructorWeek(array);
+    else return helper.messageConstructorWeek(array,even);
 
 };
 

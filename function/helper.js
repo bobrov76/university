@@ -48,13 +48,24 @@ messageConstructorDay = (datas) => {
   return message;
 };
 
-messageConstructorWeek = (datas) => {
+messageConstructorWeek = (datas,even) => {
 
   let message = "";
   let number = 0;
 
   datas.forEach((data, i) => {
     number+=1;
+
+
+
+    if(even && i==2){
+      message += `Вт \n`;
+      message += `&#9989; Сегодня выходной &#128524; \n\n`;
+    }
+    if(!even && i==0){
+      message += `Пн \n`;
+      message += `&#9989; Сегодня выходной &#128524; \n\n`;
+    }
     if(i%2==0) message += `${data.weekDay} \n`;
     message += "&#9989;Пара " + Number(number) + "\n";
     message += "Предмет : " + data.subject + " ( " + data.cabinet+ " каб.) \n";
@@ -73,7 +84,15 @@ messageConstructorAll = (datas) => {
   datas.forEach((data, i) => {
 
     if(i==0) message += `\n 1&#8419; Четная неделя \n\n\n`;
+    if(i==2){
+      message += `Вт \n`;
+      message += `&#9989; Сегодня выходной &#128524; \n\n`;
+    }
     if(i==8) message += `\n 2&#8419; Нечетная неделя \n\n\n`;
+    if(i==8){
+      message += `Пн \n`;
+      message += `&#9989; Сегодня выходной &#128524; \n\n`;
+    }
 
     number+=1;
     if(i%2==0) message += `${data.weekDay} \n`;
