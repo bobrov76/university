@@ -13,7 +13,7 @@ const bot = new VkBot(botConfig.token);
 // отправка по времени
 cron.schedule('* * * * *', async () => { //1 раз в минуту
   const newDate = new Date();
-  const oldDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 14, 0, 0, 0);
+  const oldDate = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 7, 30, newDate.getSeconds(), newDate.getMilliseconds());
   let ifOld = newDate.getFullYear() + '-' + newDate.getMonth() + '-' + newDate.getDate() + '-' + oldDate.getHours() + '-' + oldDate.getMinutes();
   let ifNew = newDate.getFullYear() + '-' + newDate.getMonth() + '-' + newDate.getDate() + '-' + newDate.getHours() + '-' + newDate.getMinutes();
 
