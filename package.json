@@ -14,7 +14,8 @@
     "node-cron": "^2.0.3",
     "node-vk-bot-api": "^3.3.7",
     "nodemon": "^2.0.4",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "vue-moment": "^4.1.0"
   },
   "devDependencies": {},
   "scripts": {

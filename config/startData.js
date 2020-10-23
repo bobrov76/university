@@ -2,11 +2,17 @@ const db = require("../models");
 const bcrypt = require("bcryptjs");
 const Timetable = db.timetable;
 const User = db.user;
+const Subject = db.subject;
+
 // Initial data
 initial = async () => {
   data.forEach(async function(item, i, arr) {
     console.log(item)
    await Timetable.create(item);
+  })
+  subject.forEach(async function(item, i, arr) {
+    console.log(item)
+    await Subject.create(item);
   })
   User.create({
     username: "admin@oziv_1_20",
@@ -14,6 +20,21 @@ initial = async () => {
   })
 
 };
+
+const subject = [
+    {
+      subject:"История",
+      teacher: "Кичеев Владимир Георгиевич"
+    },
+  {
+    subject:"Физика",
+    teacher: "Чесноков Дмитрий Владимирович"
+  },
+  {
+    subject:"Математика",
+    teacher: "Плюснина Елена Сергеевна"
+  },
+];
 
 
 const data = [
